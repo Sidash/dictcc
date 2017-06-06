@@ -5,6 +5,7 @@ import requests
 from lxml import html, etree
 import argparse
 import sys
+import socket
 
 offset = 40
 prog = sys.argv[0]
@@ -82,7 +83,9 @@ if (len(content)):
 for item in content:
     i += 1
     if i%2:
-        res_to = " ".join(item.xpath('child::node()//text()'))
+        res_to = " ".join(item.xpath('child::a//text()'))
+        if item.xpath('child::dfn//text()'):
+            res_to += " {"+", ".join(item.xpath('child::dfn//text()'))+"}"
         j = 0
         while j < len(res_from) or j < len(res_to):
             kk = offset - len(res_from[j:j+offset])
@@ -92,7 +95,9 @@ for item in content:
             j += offset
             pass
     else :
-        res_from = " ".join(item.xpath('child::node()//text()'))
+        res_from = " ".join(item.xpath('child::a//text()'))
+        if item.xpath('child::dfn//text()'):
+            res_from += " {"+", ".join(item.xpath('child::dfn//text()'))+"}"
 
 # parse suggestions
 if not (len(content)) :
