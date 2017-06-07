@@ -59,7 +59,7 @@ if len(sys.argv) > 2:
         print('Please select at least one primary dictionary from the list below')
         print(" ".join(dict_primary))
         exit()
-search = " ".join(sys.argv[2:])
+search = " ".join(sys.argv[2:]).strip()
 
 # set up session
 s = requests.Session()
@@ -68,7 +68,12 @@ get = {'s':search}
 url = "http://"+dictionary+".dict.cc/"
 
 # get result
-response = s.get(url, params=get)
+try:
+    response = s.get(url, params=get)
+except Exception as e:
+    print(e)
+    print("\n\nSomething went wrong while processing the request. Check your web connection maybe ...")
+    exit()
 tree = html.fromstring(response.content)
 
 # get languages
