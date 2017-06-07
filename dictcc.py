@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import requests
+import os
 from lxml import html, etree
-import argparse
 import sys
 import socket
 
-offset = 40
+rows, columns = os.popen('stty size', 'r').read().split()
+
+offset = int(int(columns)/2) # half width
 prog = sys.argv[0]
 
 dict_primary = ['en','de']
