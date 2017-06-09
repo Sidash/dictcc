@@ -12,7 +12,7 @@ function dictcc_prompt() {
         echo "\n\n--------------------------------------------------------------------------------"
         clear;
         echo "Searching in '$dict' for '$query'";
-        dictcc $dict $query;
+        dictcc $dict $query | less;
         echo
     done;
 }
